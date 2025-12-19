@@ -79,3 +79,5 @@ require (
 )
 
 replace sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.3
+
+replace github.com/spectrocloud/maas-client-go => github.com/vasartori/maas-client-go v1.1.0-beta1
