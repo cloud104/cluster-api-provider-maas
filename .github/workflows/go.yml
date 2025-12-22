@@ -1,0 +1,87 @@
+name: Go
+
+on:
+  pull_request:
+    paths:
+      - '**/*.go'
+      - 'go.mod'
+      - 'go.sum'
+      - 'Makefile'
+      - '**/zz_generated.deepcopy.go'
+      - 'hack/**'
+      - 'config/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  go:
+    name: Go Checks
+    runs-on: tks-gha-runner
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
+      - name: Format
+        run: make fmt
+
+      - name: Check formatting
+        shell: bash
+        run: |
+          # Fail if make fmt produced changes
+          if ! git diff --quiet; then
+            echo "::error ::Detected files that are not properly formatted (make fmt produced changes):"
+            git --no-pager diff || true
+            echo "Run 'make fmt' locally and commit the results."
+            exit 1
+          fi
+          echo "Formatting is up to date."
+
+      - name: Generate code
+        run: make generate
+
+      - name: Check generated deepcopy
+        shell: bash
+        run: |
+          CHANGED=$(git diff --name-only -- '**/zz_generated.deepcopy.go' || true)
+          if [[ -n "$CHANGED" ]]; then
+            echo "::error ::Detected outdated generated deepcopy files:"
+            echo "$CHANGED"
+            git --no-pager diff -- '**/zz_generated.deepcopy.go' || true
+            echo "Run 'make generate' locally and commit the results."
+            exit 1
+          fi
+          echo "All zz_generated.deepcopy.go files are up to date."
+
+      - name: Generate manifests
+        run: make manifests
+
+      - name: Check manifests
+        shell: bash
+        run: |
+          # Limit diffs to the expected output dirs
+          CHANGED=$(git diff --name-only -- 'config/crd/bases/**' 'config/rbac/**' || true)
+
+          if [[ -n "$CHANGED" ]]; then
+            echo "::error ::Detected outdated CRD/RBAC manifests:"
+            echo "$CHANGED"
+            # show unified diff for context
+            git --no-pager diff -- 'config/crd/bases/**' 'config/rbac/**' || true
+            echo "Run 'make manifests' locally and commit the results."
+            exit 1
+          fi
+
+          echo "CRD and RBAC manifests are up to date."
+
+      - name: Build
+        shell: bash
+        run: |
+          set -euo pipefail
+          go build ./...
