@@ -77,6 +77,3 @@ require (
 )
 
 replace sigs.k8s.io/structured-merge-diff/v4 => sigs.k8s.io/structured-merge-diff/v4 v4.4.3
-
-// TODO: remove this replacement when cloud104/maas-client-go v1.0.0 is released
-replace github.com/cloud104/maas-client-go v1.0.0 => ./../maas-client-go
