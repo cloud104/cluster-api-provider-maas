@@ -19,10 +19,10 @@ package scope
 import (
 	"context"
 	"fmt"
+	infrav1beta1 "github.com/cloud104/cluster-api-provider-maas/api/v1beta1"
 	"github.com/go-logr/logr"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
-	infrav1beta1 "github.com/cloud104/cluster-api-provider-maas/api/v1beta1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/wait"

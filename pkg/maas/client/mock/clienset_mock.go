@@ -24,8 +24,8 @@ import (
 	net "net"
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	maasclient "github.com/cloud104/maas-client-go/maasclient"
+	gomock "github.com/golang/mock/gomock"
 )
 
 // MockClientSetInterface is a mock of ClientSetInterface interface.

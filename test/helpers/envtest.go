@@ -30,9 +30,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cloud104/cluster-api-provider-maas/test/helpers/external"
 	"github.com/onsi/ginkgo"
 	"github.com/pkg/errors"
-	"github.com/cloud104/cluster-api-provider-maas/test/helpers/external"
 	admissionv1 "k8s.io/api/admissionregistration/v1"
 	corev1 "k8s.io/api/core/v1"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
