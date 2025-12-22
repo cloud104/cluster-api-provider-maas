@@ -22,9 +22,9 @@ ALL_ARCH = amd64 arm64
 #IMG ?= ${IMG_URL}/${IMAGE_NAME}:${IMG_TAG}
 
 # Image URL to use all building/pushing image targets
-IMAGE_NAME := cluster-api-provider-maas-controller
-REGISTRY ?= "us-east1-docker.pkg.dev/spectro-images/dev/${USER}/cluster-api"
-IMG_TAG ?= v0.7.0
+IMAGE_NAME := manager
+REGISTRY ?= "us-east1-docker.pkg.dev/tks-staging/cluster-api-provider-maas"
+IMG_TAG ?= v1.0.0
 CONTROLLER_IMG ?= ${REGISTRY}/${IMAGE_NAME}
 
 # Set --output-base for conversion-gen if we are not within GOPATH
