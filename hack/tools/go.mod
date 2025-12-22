@@ -1,4 +1,4 @@
-module spectrocloud.com/cluster-api-provider-maas/hack/tools
+module github.com/cloud104/cluster-api-provider-maas/hack/tools
 
 go 1.22.0
 
