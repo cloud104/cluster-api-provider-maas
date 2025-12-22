@@ -3,9 +3,9 @@ package machine
 import (
 	"context"
 
-	"github.com/pkg/errors"
 	"github.com/cloud104/cluster-api-provider-maas/pkg/maas/scope"
 	"github.com/cloud104/maas-client-go/maasclient"
+	"github.com/pkg/errors"
 	"k8s.io/klog/v2/textlogger"
 
 	infrav1beta1 "github.com/cloud104/cluster-api-provider-maas/api/v1beta1"
